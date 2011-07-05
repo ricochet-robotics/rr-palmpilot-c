@@ -1,0 +1,163 @@
+//
+// $Id: ricochetRsc.rcp,v 1.2 2003/02/14 06:01:37 keithp Exp $
+//
+// Copyright © 2003 Keith Packard
+//
+// Permission to use, copy, modify, distribute, and sell this software and its
+// documentation for any purpose is hereby granted without fee, provided that
+// the above copyright notice appear in all copies and that both that
+// copyright notice and this permission notice appear in supporting
+// documentation, and that the name of Keith Packard not be used in
+// advertising or publicity pertaining to distribution of the software without
+// specific, written prior permission.  Keith Packard makes no
+// representations about the suitability of this software for any purpose.  It
+// is provided "as is" without express or implied warranty.
+//
+// KEITH PACKARD DISCLAIMS ALL WARRANTIES WITH REGARD TO THIS SOFTWARE,
+// INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS, IN NO
+// EVENT SHALL KEITH PACKARD BE LIABLE FOR ANY SPECIAL, INDIRECT OR
+// CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE,
+// DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER
+// TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
+// PERFORMANCE OF THIS SOFTWARE.
+//
+
+#include "ricochetRsc.h"
+
+ICONFAMILY "ricochet1bpp.bmp" COLORTABLE TRANSPARENT 255 255 255
+
+TRANSLATION "eng"
+BEGIN
+
+"Ricochet" 		= "Ricochet"
+"Undo" 			= "Undo"
+"Restart" 		= "Restart"
+"Next Round"		= "Next Round"
+"New Game" 		= "New Game"
+"Undo"			= "Undo"
+
+"Timer"			= "Timer"
+"Start"			= "Start"
+"Stop"			= "Stop"
+
+"Help"			= "Help"
+"Controls"		= "Controls"
+"Rules"			= "Rules"
+"About Ricochet"	= "About Ricochet"
+
+"Ricochet Robots"	= "Ricochet Robots"
+
+"About Ricochet Robots"	= "About Ricochet Robots"
+"About Ricochet Robots Text" = "" \
+	"Ricochet © 2003\r" \
+	"Keith Packard & Bart Massey\r"\
+	"Version 0.1\r"\
+	"http://keithp.com\r"\
+	"keithp@keithp.com"
+"Done"			= "Done"
+
+"Ricochet Controls"	= "Ricochet Controls"
+"Controls Help"		= "" \
+	"Tap robot to select.\r" \
+	"Tap destination to move.\r" \
+	"Drag robot to select\r" \
+	"  and move.\r"\
+	"Up button to undo.\r" \
+	"Tap center to start/stop\r" \
+	"  timer."
+
+"Ricochet Robots Rules"	= "Ricochet Robots Rules"
+
+"Rules Text" = "" \
+	"RicochetRobots\r\r"\
+	"Goal: move solid robot to target in minimal moves\r\r"\
+	"Robots move horizontally or vertically until they hit an "\
+	"obstruction. "\
+	"Use outlined robots as extra obstructions. "\
+	"Each movement of any robot counts as 1 move.\r\r"\
+	"Multiple players plan moves privately and bid number of moves. "\
+	"First bidder starts timer. "\
+	"Successive bids needn't be lower. "\
+	"Lowest bidder attempts solution. "\
+	"Failure to solve in no more than bid moves passes attempt " \
+	"to next higher bidder. "\
+	"Success counts as one point for round. "\
+	"Player with most points at end of game wins."
+
+END
+
+FORM mainForm 0 0 160 160
+USABLE
+MENUID menuBar
+BEGIN
+END
+
+MENU menuBar
+BEGIN
+	PULLDOWN "Ricochet"
+	BEGIN
+		MENUITEM "Restart" 	menuRicochetRestart	"R"
+		MENUITEM "Next Round" 	menuRicochetNext	"N"
+		MENUITEM "New Game"	menuRicochetNew		"G"
+		MENUITEM SEPARATOR
+		MENUITEM "Undo"		menuRicochetUndo	"U"
+	END
+	PULLDOWN "Timer"
+	BEGIN
+		MENUITEM "Start"	menuTimerStart		"T"
+		MENUITEM "Stop"		menuTimerStop		"S"
+	END
+	PULLDOWN "Help"
+	BEGIN
+		MENUITEM "Controls" 	menuHelpControls 	"C"
+		MENUITEM "Rules" 	menuHelpRules 		"L"
+		MENUITEM SEPARATOR
+		MENUITEM "About Ricochet" menuHelpGetInfo 	"I"
+	END
+END
+
+BITMAP ID bitmapRobotActive		"robotActive.bmp"
+BITMAP ID bitmapRobotPassive		"robotPassive.bmp"
+BITMAP ID bitmapTarget			"target.bmp"
+BITMAP ID bitmapRobotActiveTarget	"robotActiveTarget.bmp"
+BITMAP ID bitmapRobotPassiveTarget	"robotPassiveTarget.bmp"
+
+FORM infoForm 2 62 156 96
+USABLE
+MODAL
+HELPID infoFormHelp
+DEFAULTBTNID infoOk
+BEGIN
+	TITLE "About Ricochet Robots"
+	LABEL 	"About Ricochet Robots Text"
+		ID infoText AT (6 15) FONT 1
+	BUTTON "Done" ID infoOk AT (10 76 AUTO AUTO)
+END
+
+STRING infoFormHelp "Info Form Help"
+
+FORM controlForm 2 32 156 126
+USABLE
+MODAL
+DEFAULTBTNID controlOk
+BEGIN
+	TITLE "Ricochet Controls"
+	LABEL 	"Controls Help"
+		ID controlText AT (6 15) FONT 1
+	BUTTON "Done" ID controlOk AT (10 106 AUTO AUTO)
+END
+
+FORM rulesForm 2 2 156 156
+USABLE
+MODAL
+DEFAULTBTNID rulesOk
+BEGIN
+	TITLE	"Ricochet Robots Rules"
+	FIELD ID rulesText AT (6 15 148 125) 
+		USABLE MULTIPLELINES MAXCHARS 4095 FONT 1 NONEDITABLE
+	BUTTON "Done" ID rulesOk AT (10 140 AUTO AUTO)
+	REPEATBUTTON "\001" rulesScrollUp AT (143 140 13 8) NOFRAME FONT 5
+	REPEATBUTTON "\002" rulesScrollDown AT (143 148 13 8) NOFRAME FONT 5
+END
+
+STRING ricochetRulesText "Rules Text"

@@ -1,0 +1,10 @@
+This is a Ricochet Robots solitaire player written in C for
+PalmOS. It was written in 2003 by Keith Packard
+<keithp@keithp.com>. This code is part of the Ricochet
+Robotics suite (http://github.com/ricochet-robotics) suite
+of Ricochet Robots tools. This code is available under terms
+described in the file COPYING in this distribution.
+
+    Bart Massey
+    bart@cs.pdx.edu
+    2011-07-05
